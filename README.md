@@ -33,7 +33,16 @@ Deploy Terraform Bootstrap CFN Template
 This will create the S3 Bucket and Policy and DynamoDB for the Terraform state, also Terraform Role  
 
 ## Deploying infrastructure
-
+run aws configure  
+in multi account environment add role_arn to your profile   
+must look some like this:   
+[default]
+region = eu-central-1  
+source_profile = default  
+role_arn = arn:aws:iam::xxxx:role/TerraformRole  
+output = json  
+  
+  
 First init:  
 terraform init -backend-config="env/qa-backend.conf"  
   
