@@ -1,0 +1,15 @@
+project = "nxp-partner-network"
+environment = "qa"
+aspnetcore_env = "nxp-partner-qa"
+db_user = "admin"
+shared_loadbalancer_arn = "arn:aws:elasticloadbalancing:eu-central-1:506710974040:loadbalancer/app/Shared-ALB/efd1dfe22b5b01d5"
+alb_certificate_arn = "arn:aws:acm:eu-central-1:506710974040:certificate/d76f3db7-02a4-44ea-b171-304278eb66ca"
+urls = {
+    "admin" = "admin.nxp.partner.qa.eimex-solutions.de"
+    "visitors" = "visitors.nxp.partner.qa.eimex-solutions.de"
+    "admin-api" = "admin-webapi.nxp.partner.qa.eimex-solutions.de"
+    "visitors-api" = "visitors-webapi.nxp.partner.qa.eimex-solutions.de"
+}
+cloudfront_certificate = "arn:aws:acm:us-east-1:506710974040:certificate/b4f518fb-bed2-43c2-861c-5ad30a6074f1"
+app_instance_arn = "arn:aws:chime:us-east-1:506710974040:app-instance/c112f9dc-d82b-456f-a3bb-3f1c20d7186c"
+app_instance_arn_user = "arn:aws:chime:us-east-1:506710974040:app-instance/c112f9dc-d82b-456f-a3bb-3f1c20d7186c/user/AdminArn"

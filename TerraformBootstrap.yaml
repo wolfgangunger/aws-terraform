@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Deploy resources needed to store terraform state files, and create the Role used by terraform"
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - qa
+      - prod
+      - stage
+
+  ProjectName:
+    Description: An project name, used to name s3 bucket
+    Type: String
+
+  OwnerName:
+    Description: An owner name, used in tags
+    Type: String
+
+  ArnUserListForTerraformRole:
+    Type: CommaDelimitedList
+    Description: Comma-delimited list of user ARN's that use the Terraform role
+    Default: "arn:aws:iam::770687811207:user/daniel.nascimento@sccbrasil.com,arn:aws:iam::770687811207:user/wolfgang.unger@sccbrasil.com,arn:aws:iam::770687811207:user/jonas.tokmaji@seracom.de"
+
+Resources:
+  ############### StateBucket #################
+
+  StateBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Sub "tf-state-${ProjectName}-${EnvironmentName}-${AWS::AccountId}"
+      VersioningConfiguration:
+        Status: Enabled
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      Tags:
+        - Key: Owner
+          Value: !Ref OwnerName
+
+  ############### DynamoDB State Lock Table #################
+
+  TerraformLocks:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "tf-state-lock"
+      BillingMode: "PAY_PER_REQUEST"
+      KeySchema:
+        - AttributeName: "LockID"
+          KeyType: "HASH"
+      AttributeDefinitions:
+        - AttributeName: "LockID"
+          AttributeType: "S"
+      Tags:
+        - Key: Owner
+          Value: !Ref OwnerName
+
+  ############### Terraform Role #################
+
+  TerraformRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: TerraformRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              AWS: !Ref ArnUserListForTerraformRole
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Tags:
+        - Key: Owner
+          Value: !Ref OwnerName
+
+Outputs:
+  TerraformStateBucket:
+    Value: !Ref StateBucket
+    Description: S3 bucket
+    Export:
+      Name: "TerraformStateBucket"
+
+  TerraformRoleArn:
+    Value: !GetAtt
+      - TerraformRole
+      - Arn
+    Description: Terraform Role Arn
+    Export:
+      Name: "TerraformRoleArn"
+
+  TerraformLockTableName:
+    Value: !Ref TerraformLocks
+    Description: Dynamo Table used to lock state files
+    Export:
+      Name: "TerraformLockTableName"
