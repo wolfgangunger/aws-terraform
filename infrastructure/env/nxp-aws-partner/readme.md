@@ -1,1 +1,0 @@
-add vars for nxp-partner environments

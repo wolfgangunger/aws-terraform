@@ -15,11 +15,6 @@
    │   └── more-modules/  
    └── infrastructure/  
        ├── env/  
-           ├──── nxp-event/  
-           │           ├── dev.tfvars  
-           │           ├── qa.tfvars  
-           │           └── prod.tfvars  
-           ├──── nxp-aws-partner/  
            │           ├── dev.tfvars  
            │           ├── qa.tfvars  
            │           └── prod.tfvars  
@@ -38,14 +33,14 @@ This will create the S3 Bucket and Policy and DynamoDB for the Terraform state, 
 ## Deploying infrastructure
 
 First init:  
-terraform init -backend-config="env/nxp-event/nxp-event-qa-backend.conf"  
+terraform init -backend-config="env/qa-backend.conf"  
   
 Plan:  
 terraform plan -var-file dev.tfvars  
-terraform plan -backend-config="env/nxp-event/nxp-event-qa-backend.conf"  
+terraform plan -backend-config="env/qa-backend.conf"  
 Apply:  
 terraform apply -var-file dev.tfvars  
-terraform apply -backend-config="env/nxp-event/nxp-event-qa-backend.conf"  
+terraform apply -backend-config="env/qa-backend.conf"  
 
 
 
