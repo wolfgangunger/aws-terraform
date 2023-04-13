@@ -23,7 +23,6 @@ Parameters:
   ArnUserListForTerraformRole:
     Type: CommaDelimitedList
     Description: Comma-delimited list of user ARN's that use the Terraform role
-    Default: "arn:aws:iam::770687811207:user/daniel.nascimento@sccbrasil.com,arn:aws:iam::770687811207:user/wolfgang.unger@sccbrasil.com,arn:aws:iam::770687811207:user/jonas.tokmaji@seracom.de"
 
 Resources:
   ############### StateBucket #################

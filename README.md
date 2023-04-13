@@ -1,5 +1,7 @@
 # Terraform
 
+A sample project to show terraform setup
+
 ## Strucure
 └── terraform/  
    ├── modules/  
