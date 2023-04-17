@@ -53,7 +53,7 @@ Resources:
   TerraformLocks:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub "tf-state-lock"
+      TableName: !Sub "tf-state-lock-${ProjectName}-${EnvironmentName}"
       BillingMode: "PAY_PER_REQUEST"
       KeySchema:
         - AttributeName: "LockID"
