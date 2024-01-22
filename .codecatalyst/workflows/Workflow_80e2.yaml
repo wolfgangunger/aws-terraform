@@ -1,0 +1,40 @@
+Name: Workflow_80e2
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: None
+    Branches:
+      - master
+
+# Required - Define action configurations.
+Actions:
+  TerraformCommunityEdition_a5:
+    # Identifies the action. Do not modify this value.
+    Identifier: codecatalyst-labs/provision-with-terraform-community@v1.0.0
+
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    # Defines the action's properties.
+    Configuration:
+      # Required; type: string; description: The Terraform state table
+      StateTable:   tf-state-lock
+
+      # Required; type: string; description: The Terraform state file
+      StateKey: tf-state-test-devtools-dev-039735417706
+
+      # Required; type: string; description: The S3 state bucket that hosts the Terraform state file for the deployment.
+      StateBucket:
+
+      # Required; type: string; description: The AWS region for the deployment
+      AWSRegion: eu-central-1
+
+      # Required; type: string; description: The Terraform version to be used by the action
+      TerraformVersion: '1.4.6'
+
+      # Required; type: string; description: The Terraform operation mode, should be either plan or apply
+      TerraformOperationMode: plan
