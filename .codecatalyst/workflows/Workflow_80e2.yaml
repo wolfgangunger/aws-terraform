@@ -2,10 +2,7 @@ Name: Workflow_80e2
 SchemaVersion: "1.0"
 
 # Optional - Set automatic triggers.
-Triggers:
-  - Type: None
-    Branches:
-      - master
+
 
 # Required - Define action configurations.
 Actions:
@@ -25,10 +22,10 @@ Actions:
       StateTable:   tf-state-lock
 
       # Required; type: string; description: The Terraform state file
-      StateKey: tf-state-test-devtools-dev-039735417706
+      StateKey: terraform.tfstate
 
       # Required; type: string; description: The S3 state bucket that hosts the Terraform state file for the deployment.
-      StateBucket:
+      StateBucket: tf-state-test-devtools-dev-039735417706
 
       # Required; type: string; description: The AWS region for the deployment
       AWSRegion: eu-central-1
