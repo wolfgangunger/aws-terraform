@@ -13,13 +13,13 @@ environment_name = "qa"
 class_B          = 101
 project_name     = "qa-project"
 owner            = "wolfgang.unger"
-role_arn         = "arn:aws:iam::243277030071:role/TerraformRole"
+role_arn         = "arn:aws:iam::xxx:role/TerraformRole"
 
 ## add admins for your environment
 admin_arns = [
-  "arn:aws:iam::039735417706:user/admin"
+  "arn:aws:iam::xxx:user/admin"
 ]
 # add user for read only access
 readonly_arns = [
-  "arn:aws:iam::039735417706:user/admin"
+  "arn:aws:iam::xxx:user/admin"
 ]
