@@ -34,4 +34,4 @@ Actions:
       TerraformVersion: '1.4.6'
 
       # Required; type: string; description: The Terraform operation mode, should be either plan or apply
-      TerraformOperationMode: plan
+      TerraformOperationMode: plan   
